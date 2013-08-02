@@ -1,0 +1,13 @@
+{
+	"name":"binary-tree",
+	"author":"isglazunov",
+	"description":"Methods for working with binary search tree. Support for duplication.",
+	"version":"0.0.0",
+	"devDependencies":{
+		"vows":"*",
+		"grunt":"*",
+		"grunt-contrib-watch":"*",
+		"grunt-contrib-coffee":"*",
+		"grunt-contrib-uglify":"*"
+	}
+}
