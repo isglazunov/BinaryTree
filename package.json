@@ -2,12 +2,20 @@
 	"name":"binary-tree",
 	"author":"isglazunov",
 	"description":"Methods for working with binary search tree. Support for duplication.",
-	"version":"0.0.0",
+	"version":"0.1.0",
 	"devDependencies":{
 		"vows":"*",
 		"grunt":"*",
 		"grunt-contrib-watch":"*",
 		"grunt-contrib-coffee":"*",
 		"grunt-contrib-uglify":"*"
+	},
+	"bugs":{
+		"url":"https://github.com/isglazunov/BinaryTree/issues?state=open",
+		"email":"isglazunov@gmail.com"
+	},
+	"repository":{
+		"url":"https://github.com/isglazunov/BinaryTree",
+		"type":"git"
 	}
 }
