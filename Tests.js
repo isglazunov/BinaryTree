@@ -9,7 +9,7 @@
   BinaryTree = null;
 
   construct = function(nodes, root, duplicating, merging) {
-    var getNode, getRoot, setLeft, setRight, setRoot,
+    var getNode, getRoot, setLeft, setNode, setRight, setRoot,
       _this = this;
     if (nodes == null) {
       nodes = {};
@@ -34,13 +34,18 @@
       nodes[address][2] = link;
       return callback([address].concat(__slice.call(nodes[address])));
     };
+    setNode = function(address, left, right, callback) {
+      nodes[address][1] = left;
+      nodes[address][2] = right;
+      return callback([address].concat(__slice.call(nodes[address])));
+    };
     getRoot = function(callback) {
       return callback(root);
     };
     setRoot = function(link, callback) {
       return callback(root = link);
     };
-    return new BinaryTree(getNode, setLeft, setRight, getRoot, setRoot, duplicating, merging, true);
+    return new BinaryTree(getNode, setLeft, setRight, setNode, getRoot, setRoot, duplicating, merging, true);
   };
 
   equal = function() {

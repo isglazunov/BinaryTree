@@ -11,9 +11,13 @@ construct = (nodes = {}, root = null, duplicating = 0, merging = 1) ->
 	setRight = (address, link, callback) =>
 		nodes[address][2] = link
 		callback [address, nodes[address]...]
+	setNode = (address, left, right, callback) =>
+		nodes[address][1] = left
+		nodes[address][2] = right
+		callback [address, nodes[address]...]
 	getRoot = (callback) => callback root
 	setRoot = (link, callback) => callback root = link
-	new BinaryTree getNode, setLeft, setRight, getRoot, setRoot, duplicating, merging, yes
+	new BinaryTree getNode, setLeft, setRight, setNode, getRoot, setRoot, duplicating, merging, yes
 
 equal = -> assert.deepEqual arguments...
 

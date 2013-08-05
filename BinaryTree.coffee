@@ -1,5 +1,5 @@
 BinaryTree = constructor = (
-	userGetNode, userSetLeft, userSetRight, userGetRoot, userSetRoot
+	userGetNode, userSetLeft, userSetRight, userSetNode, userGetRoot, userSetRoot
 	duplicating, merging, debug
 ) ->
 	
@@ -38,43 +38,53 @@ BinaryTree = constructor = (
 	assert.merging merging
 	assert.boolean debug
 	
+	instance.user = {}
 	if debug
-		instance.getNode = getNode = (address, callback) ->
+		instance.user.getNode = getNode = (address, callback) ->
 			assert.address address
 			userGetNode address, (node) ->
 				assert.node node
 				callback node
 
-		instance.setLeft = setLeft = (address, link, callback) ->
+		instance.user.setLeft = setLeft = (address, link, callback) ->
 			assert.address address
 			assert.link link
 			userSetLeft address, link, (node) ->
 				assert.node node
 				callback node
 
-		instance.setRight = setRight = (address, link, callback) ->
+		instance.user.setRight = setRight = (address, link, callback) ->
 			assert.address address
 			assert.link link
 			userSetRight address, link, (node) ->
 				assert.node node
 				callback node
+		
+		instance.user.setNode = setNode = (address, left, right, callback) ->
+			assert.address address
+			assert.link left
+			assert.link right
+			userSetNode address, left, right, (node) ->
+				assert.node node
+				callback node
 
-		instance.getRoot = getRoot = (callback) ->
+		instance.user.getRoot = getRoot = (callback) ->
 			userGetRoot (root) ->
 				assert.link root
 				callback root
 
-		instance.setRoot = setRoot = (link, callback) ->
+		instance.user.setRoot = setRoot = (link, callback) ->
 			assert.link link
 			userSetRoot link, (root) ->
 				assert.link root
 				callback root
 	else
-		instance.getNode = getNode = userGetNode
-		instance.setLeft = setLeft = userSetLeft
-		instance.setRight = setRight = userSetRight
-		instance.getRoot = getRoot = userGetRoot
-		instance.setRoot = setRoot = userSetRoot
+		instance.user.getNode = getNode = userGetNode
+		instance.user.setLeft = setLeft = userSetLeft
+		instance.user.setRight = setRight = userSetRight
+		instance.user.setNode = setNode = userSetNode
+		instance.user.getRoot = getRoot = userGetRoot
+		instance.user.setRoot = setRoot = userSetRoot
 	
 	# unsafe
 	instance.unsafe = {}
@@ -183,7 +193,7 @@ BinaryTree = constructor = (
 		else
 			methods[1] source[0], target[0], -> methods[2] source[0], null, (newSource) ->
 				handler newSource, -> handler target, ->
-					setLeft target[0], source[2], -> setRight target[0], source[3], (target) ->
+					setNode target[0], source[2], source[3], (target) ->
 						handler target, null
 	
 	# unsafe merge
@@ -247,7 +257,7 @@ BinaryTree = constructor = (
 					handler newTarget, -> callback target[3]
 		else if target[2]? and target[3]?
 			getNode target[2], (left) -> getNode target[3], (right) ->
-				setLeft target[0], null, -> setRight target[0], null, (target) ->
+				setNode target[0], null, null, (target) ->
 					handler target, ->
 						unsafeMerge left, right, (node, next) -> handler node, ->
 							if next? then do next

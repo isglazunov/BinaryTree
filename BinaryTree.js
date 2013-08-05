@@ -2,8 +2,8 @@
   var BinaryTree, constructor,
     __slice = [].slice;
 
-  BinaryTree = constructor = function(userGetNode, userSetLeft, userSetRight, userGetRoot, userSetRoot, duplicating, merging, debug) {
-    var assert, attach, binaryTree, duplicatingDirection, getNode, getRoot, instance, safeAttach, safeDetach, safeSearch, search, setLeft, setRight, setRoot, unsafeAttach, unsafeAttachDuplicates, unsafeAttachDuplicatesOn, unsafeCorner, unsafeDetach, unsafeDetachChange, unsafeDetachResult, unsafeDouble, unsafeDoubleHandler, unsafeDoubleTravel, unsafeMerge, unsafeMergeAction, unsafeSearch, unsafeSearchAction, unsafeTravel, valid;
+  BinaryTree = constructor = function(userGetNode, userSetLeft, userSetRight, userSetNode, userGetRoot, userSetRoot, duplicating, merging, debug) {
+    var assert, attach, binaryTree, duplicatingDirection, getNode, getRoot, instance, safeAttach, safeDetach, safeSearch, search, setLeft, setNode, setRight, setRoot, unsafeAttach, unsafeAttachDuplicates, unsafeAttachDuplicatesOn, unsafeCorner, unsafeDetach, unsafeDetachChange, unsafeDetachResult, unsafeDouble, unsafeDoubleHandler, unsafeDoubleTravel, unsafeMerge, unsafeMergeAction, unsafeSearch, unsafeSearchAction, unsafeTravel, valid;
     binaryTree = instance = this;
     instance.is = valid = {
       array: function(argument) {
@@ -69,15 +69,16 @@
     assert.duplicating(duplicating);
     assert.merging(merging);
     assert.boolean(debug);
+    instance.user = {};
     if (debug) {
-      instance.getNode = getNode = function(address, callback) {
+      instance.user.getNode = getNode = function(address, callback) {
         assert.address(address);
         return userGetNode(address, function(node) {
           assert.node(node);
           return callback(node);
         });
       };
-      instance.setLeft = setLeft = function(address, link, callback) {
+      instance.user.setLeft = setLeft = function(address, link, callback) {
         assert.address(address);
         assert.link(link);
         return userSetLeft(address, link, function(node) {
@@ -85,7 +86,7 @@
           return callback(node);
         });
       };
-      instance.setRight = setRight = function(address, link, callback) {
+      instance.user.setRight = setRight = function(address, link, callback) {
         assert.address(address);
         assert.link(link);
         return userSetRight(address, link, function(node) {
@@ -93,13 +94,22 @@
           return callback(node);
         });
       };
-      instance.getRoot = getRoot = function(callback) {
+      instance.user.setNode = setNode = function(address, left, right, callback) {
+        assert.address(address);
+        assert.link(left);
+        assert.link(right);
+        return userSetNode(address, left, right, function(node) {
+          assert.node(node);
+          return callback(node);
+        });
+      };
+      instance.user.getRoot = getRoot = function(callback) {
         return userGetRoot(function(root) {
           assert.link(root);
           return callback(root);
         });
       };
-      instance.setRoot = setRoot = function(link, callback) {
+      instance.user.setRoot = setRoot = function(link, callback) {
         assert.link(link);
         return userSetRoot(link, function(root) {
           assert.link(root);
@@ -107,11 +117,12 @@
         });
       };
     } else {
-      instance.getNode = getNode = userGetNode;
-      instance.setLeft = setLeft = userSetLeft;
-      instance.setRight = setRight = userSetRight;
-      instance.getRoot = getRoot = userGetRoot;
-      instance.setRoot = setRoot = userSetRoot;
+      instance.user.getNode = getNode = userGetNode;
+      instance.user.setLeft = setLeft = userSetLeft;
+      instance.user.setRight = setRight = userSetRight;
+      instance.user.setNode = setNode = userSetNode;
+      instance.user.getRoot = getRoot = userGetRoot;
+      instance.user.setRoot = setRoot = userSetRoot;
     }
     instance.unsafe = {};
     instance.unsafe.travel = unsafeTravel = function(node, handler) {
@@ -279,10 +290,8 @@
             return methods[2](source[0], null, function(newSource) {
               return handler(newSource, function() {
                 return handler(target, function() {
-                  return setLeft(target[0], source[2], function() {
-                    return setRight(target[0], source[3], function(target) {
-                      return handler(target, null);
-                    });
+                  return setNode(target[0], source[2], source[3], function(target) {
+                    return handler(target, null);
                   });
                 });
               });
@@ -400,17 +409,15 @@
       } else if ((target[2] != null) && (target[3] != null)) {
         return getNode(target[2], function(left) {
           return getNode(target[3], function(right) {
-            return setLeft(target[0], null, function() {
-              return setRight(target[0], null, function(target) {
-                return handler(target, function() {
-                  return unsafeMerge(left, right, function(node, next) {
-                    return handler(node, function() {
-                      if (next != null) {
-                        return next();
-                      } else {
-                        return callback(node[0]);
-                      }
-                    });
+            return setNode(target[0], null, null, function(target) {
+              return handler(target, function() {
+                return unsafeMerge(left, right, function(node, next) {
+                  return handler(node, function() {
+                    if (next != null) {
+                      return next();
+                    } else {
+                      return callback(node[0]);
+                    }
                   });
                 });
               });
