@@ -34,8 +34,10 @@ setRoot = (link, callback) ->
 ```
 An example can be seen in the test file or Tests.coffee Tests.js.
 
-To run the tests, you can try this
+To run the tests, you can try this:
 `vows Tests.coffee --spec`
+
+If you use `grunt`, the main file and the test file will be compiled automatically.
 
 ## Changes.
 ### v0.1.0
