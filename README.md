@@ -34,6 +34,9 @@ setRoot = (link, callback) ->
 ```
 An example can be seen in the test file or Tests.coffee Tests.js.
 
+To run the tests, you can try this
+`vows Tests.coffee --spec`
+
 ## Changes.
 ### v0.1.0
 Written including, possibly, all behaviors.
