@@ -323,7 +323,7 @@ BinaryTree = constructor = (
 		getNode target, (target) -> safeAttach target, handler
 	
 	# detach
-	instance.detach = attach = (target, handler) ->
+	instance.detach = detach = (target, handler) ->
 		assert.address target
 		assert.function handler
 		
