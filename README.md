@@ -39,6 +39,69 @@ To run the tests, you can try this:
 
 If you use `grunt`, the main file and the test file will be compiled automatically.
 
+## Description
+
+### handler
+`(null, null) ->` not found
+`(node, null) ->` last node
+`(node, next) ->` not last node
+the last returned node - the target node
+
+### direction
+1 - left
+2 - right
+0 - disable (not always)
+
+## Methods
+
+### search
+
+#### search node by key, from root
+`instance.search key target, (node, next) -> do next`
+
+#### search node from root
+`instance.safe.search [address, key, left, right] target, (node, next) -> do next`
+
+#### search node from other node
+`instance.unsafe search [address, key, left, right] source, [address, key, left, right] target, (node, next) -> do next`
+
+### attach
+
+#### create a node by a key and attach to the tree from the root
+`instance.attach key target, (node, next) -> do next`
+
+#### attach target node to the tree from the root
+`instance.safe.attach [address, key, left, right] target, (node, next) -> do next`
+
+#### attach target node to the tree from the source node
+`instance.unsafe.attach [address, key, left, right] source, [address, key, left, right] target, (node, next) -> do next`
+
+### detach
+
+#### detach node by address from root node
+`instance.detach address target, (node, next) -> do next`
+
+#### detach target node from root node
+`instance.safe.detach [address, key, left, right] target, (node, next) -> do next`
+
+#### detach target node from source node
+`instance.unsafe.detach [address, key, left, right] source, [address, key, left, right] target, (node, next) -> do next`
+
+### travel
+
+#### travel to node from node
+`instance.unsafe.travel [address, key, left, right], (node, next) -> next [address, key, left, right]`
+
+### corner
+
+#### travel in a certain direction at specified node of the tree
+`instance.unsafe.corner [address, key, left, right] source, Number direction, (node, next) -> do next`
+
+### merge
+
+#### merging the left and right node
+`instance.unsafe.merge [address, key, left, right] left, [address, key, left, right] right, (node, next) -> do next`
+
 ## Changes.
 ### v0.1.0
 Written including, possibly, all behaviors.
