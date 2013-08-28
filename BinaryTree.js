@@ -1,9 +1,9 @@
 (function() {
-  var BinaryTree, constructor,
+  var binaryTree, constructor,
     __slice = [].slice;
 
-  BinaryTree = constructor = function(userGetNode, userSetLeft, userSetRight, userSetNode, userGetRoot, userSetRoot, duplicating, merging, debug) {
-    var assert, attach, binaryTree, duplicatingDirection, getNode, getRoot, instance, safeAttach, safeDetach, safeSearch, search, setLeft, setNode, setRight, setRoot, unsafeAttach, unsafeAttachDuplicates, unsafeAttachDuplicatesOn, unsafeCorner, unsafeDetach, unsafeDetachChange, unsafeDetachResult, unsafeDouble, unsafeDoubleHandler, unsafeDoubleTravel, unsafeMerge, unsafeMergeAction, unsafeSearch, unsafeSearchAction, unsafeTravel, valid;
+  binaryTree = constructor = function(userGetNode, userSetLeft, userSetRight, userSetNode, userGetRoot, userSetRoot, duplicating, merging, debug) {
+    var assert, attach, detach, duplicatingDirection, getNode, getRoot, instance, safeAttach, safeDetach, safeSearch, search, setLeft, setNode, setRight, setRoot, unsafeAttach, unsafeAttachDuplicates, unsafeAttachDuplicatesOn, unsafeCorner, unsafeDetach, unsafeDetachChange, unsafeDetachResult, unsafeDouble, unsafeDoubleHandler, unsafeDoubleTravel, unsafeMerge, unsafeMergeAction, unsafeSearch, unsafeSearchAction, unsafeTravel, valid;
     binaryTree = instance = this;
     instance.is = valid = {
       array: function(argument) {
@@ -502,7 +502,7 @@
         return safeAttach(target, handler);
       });
     };
-    instance.detach = attach = function(target, handler) {
+    instance.detach = detach = function(target, handler) {
       assert.address(target);
       assert["function"](handler);
       return getNode(target, function(target) {

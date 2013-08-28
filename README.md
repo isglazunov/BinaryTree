@@ -1,21 +1,27 @@
 # BinaryTree
-0.1.1
+0.1.2
 
-Methods for working with binary search tree. Support for duplication.
-
-## Features
-### Full modularity
-#### As seen node array of 4 values.
+## terms
 `node = [address, key, left, right]`
-##### address
-a string or a number
-##### key
-just a number
-##### left & right
-address, or null if the subtree is empty
+`Address` is a `string` or a `number`
+`address` is `Address`
+`key` is a number
+`left` and `right` is `Address` or `null`
+if `left` or `right` is a `null` then right subtree is empty
+`handler` is a `function`
+`direction` indicates the direction, `1` indicates to the left, `2` indicates to the right
+`duplicating` rule indicates duplicating of nodes, 0 disables duplication, 1 includes left, 2 includes right
+`merging` rule indicates merging of nodes, works as direction
+`debug` is a `boolean`, indicates throw any errors
 
-#### The constructor takes the wrapper methods.
-**This module allows you to use anywhere.**
+### handler variants
+`(null, null) ->` not found
+`(node, null) ->` last node
+`(node, next) ->` not last node
+the last returned node - the target node
+
+## construct
+it gives full modularity
 ```
 getNode = (address, callback) -> callback node # return the node address - address
 setLeft = (address, leftLink, callback) ->
@@ -32,82 +38,33 @@ setRoot = (link, callback) ->
 	# use the link on the root
 	callback link
 ```
-An example can be seen in the test file or Tests.coffee Tests.js.
+`new BinaryTree getNode, setLeft, setRight, setNode, getRoot, setRoot, duplicating, merging, debug`
 
-To run the tests, you can try this:
-`vows Tests.coffee --spec`
+an example can be seen in the test file Tests.coffee Tests.coffee or Tests.js
+to run the tests, you can try `vows Tests.coffee --spec` in console
+if you use `grunt` in console, the main file and the test file will be compiled automatically
 
-If you use `grunt`, the main file and the test file will be compiled automatically.
-
-## Description
-
-### handler
-`(null, null) ->` not found
-`(node, null) ->` last node
-`(node, next) ->` not last node
-the last returned node - the target node
-
-### direction
-1 - left
-2 - right
-0 - disable (not always)
-
-## Methods
-
-### search
-
-#### search node by key, from root
+## instance
+`instance.unsafe.travel node, (node, next) -> next node`
+`instance.unsafe.corner node source, direction, (node, next) -> do next`
+`instance.unsafe.merge node left, node right, (node, next) -> do next`
 `instance.search key target, (node, next) -> do next`
-
-#### search node from root
-`instance.safe.search [address, key, left, right] target, (node, next) -> do next`
-
-#### search node from other node
-`instance.unsafe search [address, key, left, right] source, [address, key, left, right] target, (node, next) -> do next`
-
-### attach
-
-#### create a node by a key and attach to the tree from the root
+`instance.safe.search node target, (node, next) -> do next handler`
+`instance.unsafe.search node source, node target, (node, next) -> do next`
 `instance.attach key target, (node, next) -> do next`
-
-#### attach target node to the tree from the root
-`instance.safe.attach [address, key, left, right] target, (node, next) -> do next`
-
-#### attach target node to the tree from the source node
-`instance.unsafe.attach [address, key, left, right] source, [address, key, left, right] target, (node, next) -> do next`
-
-### detach
-
-#### detach node by address from root node
+`instance.safe.attach node target, (node, next) -> do next`
+`instance.unsafe.attach node source, node target, (node, next) -> do next`
 `instance.detach address target, (node, next) -> do next`
+`instance.safe.detach node target, (node, next) -> do next`
+`instance.unsafe.detach node source, node target, (node, next) -> do next`
 
-#### detach target node from root node
-`instance.safe.detach [address, key, left, right] target, (node, next) -> do next`
-
-#### detach target node from source node
-`instance.unsafe.detach [address, key, left, right] source, [address, key, left, right] target, (node, next) -> do next`
-
-### travel
-
-#### travel to node from node
-`instance.unsafe.travel [address, key, left, right], (node, next) -> next [address, key, left, right]`
-
-### corner
-
-#### travel in a certain direction at specified node of the tree
-`instance.unsafe.corner [address, key, left, right] source, Number direction, (node, next) -> do next`
-
-### merge
-
-#### merging the left and right node
-`instance.unsafe.merge [address, key, left, right] left, [address, key, left, right] right, (node, next) -> do next`
-
-## Changes.
-### v0.1.0
+## changes
+### 0.1.2
+Improved documentation.
+### 0.1.1
+In the constructor method is added setNode, immediately setting the left and right subtree, for increased productivity.
+### 0.1.0
 Written including, possibly, all behaviors.
 Written library performs tests.
 The library can be used as a node.js module.
-
-### v0.1.1
-In the constructor method is added setNode, immediately setting the left and right subtree, for increased productivity.
 Custom methods passed to the constructor transferred to the sub-object instance.user.
