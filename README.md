@@ -11,7 +11,7 @@
 
 `address` is `Address`
 
-`key` is a number
+`key` is a `number`
 
 `left` and `right` is `Address` or `null`
 
