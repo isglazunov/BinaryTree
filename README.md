@@ -1,6 +1,9 @@
 # BinaryTree
 0.1.2
 
+`npm install binary-tree`
+`git clone https://github.com/isglazunov/BinaryTree.git`
+
 ## terms
 `node = [address, key, left, right]`
 
