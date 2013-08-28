@@ -3,21 +3,34 @@
 
 ## terms
 `node = [address, key, left, right]`
+
 `Address` is a `string` or a `number`
+
 `address` is `Address`
+
 `key` is a number
+
 `left` and `right` is `Address` or `null`
+
 if `left` or `right` is a `null` then right subtree is empty
+
 `handler` is a `function`
+
 `direction` indicates the direction, `1` indicates to the left, `2` indicates to the right
+
 `duplicating` rule indicates duplicating of nodes, 0 disables duplication, 1 includes left, 2 includes right
+
 `merging` rule indicates merging of nodes, works as direction
+
 `debug` is a `boolean`, indicates throw any errors
 
 ### handler variants
 `(null, null) ->` not found
+
 `(node, null) ->` last node
+
 `(node, next) ->` not last node
+
 the last returned node - the target node
 
 ## construct
@@ -41,7 +54,9 @@ setRoot = (link, callback) ->
 `new BinaryTree getNode, setLeft, setRight, setNode, getRoot, setRoot, duplicating, merging, debug`
 
 an example can be seen in the test file Tests.coffee Tests.coffee or Tests.js
+
 to run the tests, you can try `vows Tests.coffee --spec` in console
+
 if you use `grunt` in console, the main file and the test file will be compiled automatically
 
 ## instance
